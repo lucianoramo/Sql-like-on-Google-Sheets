@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<title>Hello, world!</title>
+</head>
+
+<body>
+	<div class="container">
+		<h2>Top 20 Maior Duração</h2>
+		<!-- <div class="dropdown">
+			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Projetos
+  </button>
+			<div id="dropdown-projetos "class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<a class="dropdown-item" href="#">Action</a>
+				<a class="dropdown-item" href="#">Another action</a>
+				<a class="dropdown-item" href="#">Something else here</a>
+			</div>
+		</div>  -->
+		<div>
+			<table class="table table-sm">
+				<thead>
+					<tr>
+						<th scope="col">Card</th>
+						<th scope="col">Descrição</th>
+						<th scope="col">Início</th>
+						<th scope="col">Fim</th>
+						<th scope="col">Duração (d)</th>
+						<th scope="col">Etapas</th>
+					</tr>
+				</thead>
+				<tbody id="tableResults">
+
+
+				</tbody>
+			</table>
+		</div>
+		<template id="rowTemplate">
+			<tr>
+				<th scope="row" class="key"><a class="link" href="" target="_blank"></a></th>
+				<td class="desc"></td>
+				<td class="dataIni"></td>
+				<td class="dataEnd"></td>
+				<td class="daysToFinish"></td>
+				<td class="phases"></td>
+			</tr>
+		</template>
+
+	</div>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+	</script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+	</script>
+	<script>
+		function success(data) {
+      //console.log(`success: ${data}`)
+
+      
+      const unique = [...new Set(data.map(item => item.project))];
+      
+      const resultTable = document.getElementById("tableResults")
+      const templateBox = document.getElementById("rowTemplate")
+      const template = templateBox.content
+      
+      data.forEach(function (r) {
+          let row = template.cloneNode(true)
+          row.querySelector(".link").textContent = r.key
+          row.querySelector(".link").href = "https://cnidigitais.atlassian.net/browse/"+r.key
+          row.querySelector(".desc").textContent = r.description
+          row.querySelector(".dataIni").textContent = r.dataInicial
+          row.querySelector(".dataEnd").textContent = r.dataFinal
+          row.querySelector(".daysToFinish").textContent = r.daysToFinish
+          row.querySelector(".phases").textContent = r.numPhases
+          resultTable.appendChild(row)
+      })
+
+    }
+
+    google.script.run.withSuccessHandler(success).timePerPhase()
+	</script>
+</body>
+
+</html>
